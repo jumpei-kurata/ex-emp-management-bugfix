@@ -20,7 +20,7 @@ public class InsertAdministratorForm {
 	private String mailAddress;
 	/** パスワード */
 	@NotBlank(message="こんなんじゃだめだよ、空白あかん")
-	@Pattern(regexp="^([a-zA-Z0-9]{8,})$")
+	@Pattern(regexp="^([a-zA-Z0-9]{8,})$", message="こんなんじゃだめだよ、英数字８文字以上でおなしゃす")
 	private String password;
 
 	/**
