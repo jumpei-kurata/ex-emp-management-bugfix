@@ -76,7 +76,7 @@ public class AdministratorController {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		if (result.hasErrors()) {
-			return "administrator/insert";
+			return "redirect:/toInsert";                     //←
 		}
 
 		BeanUtils.copyProperties(form, administrator);
@@ -84,7 +84,6 @@ public class AdministratorController {
 			administratorService.insert(administrator);
 			return "administrator/login";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			model.addAttribute("doubleMailAddress", "メールアドレスが重複しています");
 			return "administrator/insert";

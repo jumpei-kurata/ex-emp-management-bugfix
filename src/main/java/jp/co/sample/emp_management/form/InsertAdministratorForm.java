@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
  */
 public class InsertAdministratorForm {
 	/** 名前 */
-	@NotBlank(message="こんなんじゃだめだよ")
+	@NotBlank(message="こんなんじゃだめだよ 空白あかん")
 	private String name;
 	/** メールアドレス */
 	@NotBlank(message="こんなんじゃだめだよ、空白あかん")
