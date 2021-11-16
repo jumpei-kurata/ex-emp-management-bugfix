@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.co.sample.emp_management.domain.Administrator;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
@@ -72,17 +73,21 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {
+	public String insert(@Validated InsertAdministratorForm form, 
+			BindingResult result,
+			RedirectAttributes redirectAttributes, 
+			Model model) {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
+		BeanUtils.copyProperties(form, administrator);
 		if (result.hasErrors()) {
-			return "redirect:/toInsert";                     //←
+//			return "redirect:/toInsert"; validationの情報はリクエストスコープに入ってるから消える。
+			return toInsert();
 		}
 
-		BeanUtils.copyProperties(form, administrator);
 		try {
 			administratorService.insert(administrator);
-			return "administrator/login";
+			return "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("doubleMailAddress", "メールアドレスが重複しています");
