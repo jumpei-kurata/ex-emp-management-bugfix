@@ -72,16 +72,23 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		if (result.hasErrors()) {
-			return toInsert();
+			return "administrator/insert";
 		}
 
 		BeanUtils.copyProperties(form, administrator);
-		administratorService.insert(administrator);
-		return "administrator/login";
+		try {
+			administratorService.insert(administrator);
+			return "administrator/login";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("doubleMailAddress", "メールアドレスが重複しています");
+			return "administrator/insert";
+		}
 	}
 
 	/////////////////////////////////////////////////////
