@@ -24,9 +24,16 @@ public class AdministratorService {
 	 * 管理者情報を登録します.
 	 * 
 	 * @param administrator 管理者情報
+	 * @throws Exception 
 	 */
-	public void insert(Administrator administrator) {
-		administratorRepository.insert(administrator);
+	public void insert(Administrator administrator) throws Exception  {
+		Administrator mailAddress = administratorRepository.findByMailAddress(administrator.getMailAddress());
+		
+		if (mailAddress == null) {
+			administratorRepository.insert(administrator);
+		} else {
+			throw new Exception("メールアドレスが重複しています。");
+		}
 	}
 	
 	/**
@@ -38,5 +45,5 @@ public class AdministratorService {
 	public Administrator login(String mailAddress, String password) {
 		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
 		return administrator;
-	}
+	}		
 }
