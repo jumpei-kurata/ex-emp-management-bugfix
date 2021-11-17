@@ -7,21 +7,33 @@ import javax.validation.constraints.Pattern;
 /**
  * 管理者情報登録時に使用するフォーム.
  * 
- * @author igamasayuki
+ * @author igamasayuki  
  * 
  */
 public class InsertAdministratorForm {
 	/** 名前 */
-	@NotBlank(message="こんなんじゃだめだよ 空白あかん")
+	@NotBlank(message = "こんなんじゃだめだよ 空白あかん")
 	private String name;
 	/** メールアドレス */
-	@NotBlank(message="こんなんじゃだめだよ、空白あかん")
-	@Email(message="こんなんじゃだめだよ、メール形式でお願い")
+	@NotBlank(message = "こんなんじゃだめだよ、空白あかん")
+	@Email(message = "こんなんじゃだめだよ、メール形式でお願い")
 	private String mailAddress;
 	/** パスワード */
-	@NotBlank(message="こんなんじゃだめだよ、空白あかん")
-	@Pattern(regexp="^([a-zA-Z0-9]{8,})$", message="こんなんじゃだめだよ、英数字８文字以上でおなしゃす")
+	@NotBlank(message = "こんなんじゃだめだよ、空白あかん")
+	@Pattern(regexp = "^([a-zA-Z0-9]{8,})$", message = "こんなんじゃだめだよ、英数字８文字以上でおなしゃす")
 	private String password;
+	/** 確認用パスワード */
+	@NotBlank(message = "こんなんじゃだめだよ、空白あかん")
+	@Pattern(regexp = "^([a-zA-Z0-9]{8,})$", message = "こんなんじゃだめだよ、英数字８文字以上でおなしゃす") 
+	private String confirmPassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	} 
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	/**
 	 * @return the name
@@ -64,11 +76,11 @@ public class InsertAdministratorForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", confirmPassword=" + confirmPassword + "]";
 	}
-	
+
 }
