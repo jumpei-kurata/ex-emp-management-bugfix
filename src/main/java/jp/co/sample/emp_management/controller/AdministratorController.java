@@ -81,8 +81,14 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		if (result.hasErrors()) {
-//			return "redirect:/toInsert"; validationの情報はリクエストスコープに入ってるから消える。
+        // return "redirect:/toInsert"; validationの情報はリクエストスコープに入ってるから消える。だからリダイレクトつけちゃだめ
 			return toInsert();
+		}
+		
+		if (form.getPassword().equals(form.getConfirmPassword())) {
+		} else {
+			model.addAttribute("confirmPassword", "パスワードが一致していません"); 
+			return "administrator/insert";
 		}
 
 		try {
@@ -93,6 +99,7 @@ public class AdministratorController {
 			model.addAttribute("doubleMailAddress", "メールアドレスが重複しています");
 			return "administrator/insert";
 		}
+		
 	}
 
 	/////////////////////////////////////////////////////
